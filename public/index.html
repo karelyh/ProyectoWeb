@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetShop Huellitas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ENCABEZADO PRINCIPAL CON LOGO Y BOTÓN DE AGREGAR -->
+    <header class="EncabezadoPrincipal">
+        <div class="ContenedorMarca">
+            <div class="CajaLogo">
+                <i class="fa-solid fa-bag-shopping"></i>
+            </div>
+            <div class="TextoMarca">
+                <h1>PetShop Huellitas</h1>
+                <p>Todo para el cuidado de tus mascotas</p>
+            </div>
+        </div>
+
+        <!-- Botón para abrir el modal de agregar -->
+        <button class="BtnPrimarioNaranja" onclick="abrirModal('ModalAgregar')">
+            <i class="fa-solid fa-plus"></i> Agregar Producto
+        </button>
+    </header>
+
+    <!-- SECCIÓN PRINCIPAL CON CONTADOR Y LISTA DE PRODUCTOS -->
+    <main class="ContenedorPrincipal">
+        <h3 class="TituloSeccion" id="ContadorProductos">Mostrando 0 productos</h3>
+
+        <!-- Aquí se cargan las tarjetas de productos -->
+        <div class="GridProductos" id="ContenedorProductos"></div>
+    </main>
+
+    <!-- MODAL PARA AGREGAR PRODUCTO -->
+    <div id="ModalAgregar" class="FondoModal">
+        <div class="TarjetaModal">
+            <div class="EncabezadoModal">
+                <h2>Agregar Producto</h2>
+                <button class="BtnCerrar" onclick="cerrarModal('ModalAgregar')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- FORMULARIO DE AGREGAR PRODUCTO -->
+            <form id="FormularioAgregar" onsubmit="guardarNuevoProducto(event)">
+
+                <!-- Nombre -->
+                <div class="GrupoFormulario">
+                    <label>Nombre del Producto <span class="Requerido">*</span></label>
+                    <input type="text" placeholder="Ej: Croquetas para perro" required id="AgregarNombre">
+                </div>
+
+                <!-- Categoría -->
+                <div class="GrupoFormulario">
+                    <label>Categoría <span class="Requerido">*</span></label>
+                    <div class="ContenedorSelect">
+                        <i class="fa-solid fa-carrot IconoInput"></i>
+                        <select required id="AgregarCategoria">
+                            <option value="Alimentos">Alimentos</option>
+                            <option value="Juguetes">Juguetes</option>
+                            <option value="Higiene">Higiene</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Precio y Stock -->
+                <div class="FilaDosColumnas">
+                    <div class="GrupoFormulario">
+                        <label>Precio <span class="Requerido">*</span></label>
+                        <div class="ContenedorInput">
+                            <span>$</span>
+                            <input type="number" step="0.01" placeholder="0.00" required id="AgregarPrecio">
+                        </div>
+                    </div>
+
+                    <div class="GrupoFormulario">
+                        <label>Stock <span class="Requerido">*</span></label>
+                        <input type="number" placeholder="0" required id="AgregarStock">
+                    </div>
+                </div>
+
+                <!-- Imagen -->
+                <div class="GrupoFormulario">
+                    <label>URL de Imagen</label>
+                    <input type="url" placeholder="https://ejemplo.com/imagen.jpg" id="AgregarImagen">
+                    <small>Opcional: URL de la imagen del producto</small>
+                </div>
+
+                <!-- Descripción -->
+                <div class="GrupoFormulario">
+                    <label>Descripción</label>
+                    <textarea placeholder="Descripción opcional del producto..." rows="3" id="AgregarDescripcion"></textarea>
+                </div>
+
+                <!-- Botones del modal -->
+                <div class="PieModal">
+                    <button type="button" class="BtnOutline" onclick="cerrarModal('ModalAgregar')">Cancelar</button>
+                    <button type="submit" class="BtnGradienteMorado">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE DETALLE DEL PRODUCTO -->
+    <div id="ModalDetalle" class="FondoModal">
+        <div class="TarjetaModal">
+            <div class="EncabezadoModal">
+                <h2 id="DetalleTitulo">Nombre del Producto</h2>
+                <button class="BtnCerrar" onclick="cerrarModal('ModalDetalle')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="CuerpoModal">
+                <!-- Imagen del producto -->
+                <img src="" alt="Producto" class="ImagenDetalle" id="DetalleImagen">
+
+                <!-- Información detallada -->
+                <div class="InfoDetalle">
+                    <small>Precio</small>
+                    <p class="TextoPrecio" id="DetallePrecio">$0.00</p>
+
+                    <small>Categoría</small>
+                    <div id="DetalleCategoria"></div>
+
+                    <small>Descripción</small>
+                    <div class="CajaDescripcion" id="DetalleDescripcion"></div>
+
+                    <small>Stock disponible</small>
+                    <div class="IndicadorStock" id="DetalleStock">
+                        <i class="fa-solid fa-cube"></i> 0 unidades
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de editar y eliminar -->
+            <div class="PieModal BotonesFull">
+                <button class="BtnAzul" onclick="abrirEditarDesdeDetalle()">
+                    <i class="fa-regular fa-pen-to-square"></i> Editar
+                </button>
+                <button class="BtnRosa" onclick="confirmarEliminarDesdeDetalle()">
+                    <i class="fa-regular fa-trash-can"></i> Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PARA EDITAR PRODUCTO -->
+    <div id="ModalEditar" class="FondoModal">
+        <div class="TarjetaModal">
+            <div class="EncabezadoModal">
+                <h2 class="TextoMorado">Editar Producto</h2>
+                <button class="BtnCerrar" onclick="cerrarModal('ModalEditar')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- FORMULARIO DE EDICIÓN -->
+            <form id="FormularioEditar" onsubmit="guardarEdicion(event)">
+                <input type="hidden" id="EditarId">
+
+                <div class="GrupoFormulario">
+                    <label>Nombre del Producto <span class="Requerido">*</span></label>
+                    <input type="text" required id="EditarNombre">
+                </div>
+
+                <div class="GrupoFormulario">
+                    <label>Categoría <span class="Requerido">*</span></label>
+                    <div class="ContenedorSelect">
+                        <i class="fa-solid fa-magnifying-glass IconoInput"></i>
+                        <select required id="EditarCategoria">
+                            <option value="Alimentos">Alimentos</option>
+                            <option value="Juguetes">Juguetes</option>
+                            <option value="Higiene">Higiene</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="FilaDosColumnas">
+                    <div class="GrupoFormulario">
+                        <label>Precio <span class="Requerido">*</span></label>
+                        <div class="ContenedorInput">
+                            <span>$</span>
+                            <input type="number" step="0.01" required id="EditarPrecio">
+                        </div>
+                    </div>
+
+                    <div class="GrupoFormulario">
+                        <label>Stock <span class="Requerido">*</span></label>
+                        <input type="number" required id="EditarStock">
+                    </div>
+                </div>
+
+                <div class="GrupoFormulario">
+                    <label>URL de Imagen</label>
+                    <input type="url" id="EditarImagen">
+                    <small>Opcional: URL de la imagen del producto</small>
+                </div>
+
+                <div class="GrupoFormulario">
+                    <label>Descripción</label>
+                    <textarea rows="3" id="EditarDescripcion"></textarea>
+                </div>
+
+                <div class="PieModal">
+                    <button type="button" class="BtnOutline" onclick="cerrarModal('ModalEditar')">Cancelar</button>
+                    <button type="submit" class="BtnSolidoAzul">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR -->
+    <div id="ModalEliminar" class="FondoModal">
+        <div class="TarjetaModal">
+            <div class="EncabezadoModal">
+                <h2 class="TextoRojo">Eliminar Producto</h2>
+                <button class="BtnCerrar" onclick="cerrarModal('ModalEliminar')">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="CuerpoModal TextoCentro">
+
+                <!-- Icono de advertencia -->
+                <div class="IconoAdvertencia">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+
+                <p>¿Estás seguro de que deseas eliminar este producto?</p>
+
+                <!-- Resumen del producto a eliminar -->
+                <div class="ResumenEliminar">
+                    <p><strong>Nombre:</strong> <span id="EliminarNombre"></span></p>
+                    <p><strong>Categoría:</strong> <span id="EliminarCategoria"></span></p>
+                    <p><strong>Precio:</strong> <span id="EliminarPrecio"></span></p>
+                    <p><strong>Stock:</strong> <span id="EliminarStock"></span></p>
+                </div>
+
+                <p class="TextoError">Esta acción no se puede deshacer.</p>
+            </div>
+
+            <!-- Botones eliminar/cancelar -->
+            <div class="PieModal">
+                <button class="BtnOutline" onclick="cerrarModal('ModalEliminar')">Cancelar</button>
+                <button class="BtnSolidoRojo" onclick="ejecutarEliminacion()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
