@@ -5,6 +5,24 @@ const API_URL = '/api/productos'; // URL relativa al mismo servidor
 
 document.addEventListener('DOMContentLoaded', () => {
     cargarProductos();
+
+    // Event listener para cambiar el icono de categoría dinámicamente
+    const selectCategoria = document.getElementById('AgregarCategoria');
+    const iconoCategoria = document.getElementById('IconoCategoria');
+
+    if (selectCategoria && iconoCategoria) {
+        selectCategoria.addEventListener('change', function () {
+            iconoCategoria.className = 'fa-solid IconoInput'; // Reset base classes
+
+            if (this.value === 'Alimentos') iconoCategoria.classList.add('fa-bone');
+            else if (this.value === 'Juguetes') iconoCategoria.classList.add('fa-futbol');
+            else if (this.value === 'Higiene') iconoCategoria.classList.add('fa-soap');
+            else iconoCategoria.classList.add('fa-carrot'); // Default
+        });
+
+        // Trigger inicial para asegurar que el icono coincida con el valor por defecto
+        selectCategoria.dispatchEvent(new Event('change'));
+    }
 });
 
 // --- CONEXIÓN AL BACKEND ---
@@ -23,11 +41,11 @@ async function cargarProductos() {
 function renderizarProductos() {
     const container = document.getElementById('products-container');
     const contador = document.getElementById('contador-productos');
-    
+
     // Si no encuentras los IDs en el HTML, asegúrate que coincidan con script.js original
     // Nota: En tu HTML los IDs eran 'ContenedorProductos' y 'ContadorProductos'. 
     // Ajusto aquí para que coincida con tu HTML subido:
-    const contenedorReal = document.getElementById('ContenedorProductos'); 
+    const contenedorReal = document.getElementById('ContenedorProductos');
     const contadorReal = document.getElementById('ContadorProductos');
 
     contenedorReal.innerHTML = '';
@@ -39,7 +57,7 @@ function renderizarProductos() {
         card.onclick = () => abrirDetalle(prod.id);
 
         let iconoCat = 'fa-paw';
-        if (prod.categoria === 'Juguetes') iconoCat = 'fa-magnifying-glass'; // Ajusta según prefieras
+        if (prod.categoria === 'Juguetes') iconoCat = 'fa-futbol'; // Ajusta según prefieras
         if (prod.categoria === 'Higiene') iconoCat = 'fa-soap';
         if (prod.categoria === 'Alimentos') iconoCat = 'fa-bone';
 
@@ -67,7 +85,7 @@ function abrirModal(id) {
 
 function cerrarModal(id) {
     document.getElementById(id).classList.remove('Activo');
-    if(id === 'ModalAgregar') document.getElementById('FormularioAgregar').reset();
+    if (id === 'ModalAgregar') document.getElementById('FormularioAgregar').reset();
 }
 
 // --- VER DETALLE ---
@@ -80,13 +98,13 @@ function abrirDetalle(id) {
     document.getElementById('DetalleImagen').src = prod.imagen;
     document.getElementById('DetallePrecio').innerText = `$${parseFloat(prod.precio).toFixed(2)}`;
     document.getElementById('DetalleDescripcion').innerText = prod.descripcion;
-    
+
     // Categoría
     const divCat = document.getElementById('DetalleCategoria');
     let iconoCat = 'fa-paw';
     if (prod.categoria === 'Higiene') iconoCat = 'fa-soap';
     if (prod.categoria === 'Alimentos') iconoCat = 'fa-bone';
-    
+
     divCat.innerHTML = `<span class="BadgeCategoria"><i class="fa-solid ${iconoCat}"></i> ${prod.categoria}</span>`;
 
     document.getElementById('DetalleStock').innerHTML = `<i class="fa-solid fa-cube"></i> ${prod.stock} unidades`;
@@ -114,7 +132,7 @@ async function guardarNuevoProducto(e) {
             body: JSON.stringify(nuevo)
         });
 
-        if(res.ok) {
+        if (res.ok) {
             cargarProductos(); // Recargar desde BD
             cerrarModal('ModalAgregar');
         }
@@ -139,7 +157,7 @@ function abrirEditarDesdeDetalle() {
 async function guardarEdicion(e) {
     e.preventDefault();
     const id = document.getElementById('EditarId').value;
-    
+
     const datosEditados = {
         nombre: document.getElementById('EditarNombre').value,
         categoria: document.getElementById('EditarCategoria').value,
@@ -156,7 +174,7 @@ async function guardarEdicion(e) {
             body: JSON.stringify(datosEditados)
         });
 
-        if(res.ok) {
+        if (res.ok) {
             cargarProductos();
             cerrarModal('ModalEditar');
         }
@@ -177,13 +195,13 @@ function confirmarEliminarDesdeDetalle() {
 
 async function ejecutarEliminacion() {
     if (!productoSeleccionado) return;
-    
+
     try {
         const res = await fetch(`${API_URL}/${productoSeleccionado.id}`, {
             method: 'DELETE'
         });
 
-        if(res.ok) {
+        if (res.ok) {
             cargarProductos();
             cerrarModal('ModalEliminar');
         }
