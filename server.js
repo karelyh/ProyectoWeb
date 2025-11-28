@@ -1,7 +1,11 @@
+require('dotenv').config(); // <--- AGREGA ESTO AL INICIO
+// npm install dote
+console.log("--> LA URL ES:", process.env.MYSQL_URL);
 const express = require('express');
 const mysql = require('mysql2/promise'); // Usamos la versión con promesas
 const cors = require('cors');
 const path = require('path');
+
 
 const app = express();
 const port = process.env.PORT || 3000;
