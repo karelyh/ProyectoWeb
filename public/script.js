@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (this.value === 'Alimentos') iconoCategoria.classList.add('fa-bone');
             else if (this.value === 'Juguetes') iconoCategoria.classList.add('fa-futbol');
             else if (this.value === 'Higiene') iconoCategoria.classList.add('fa-soap');
+            else if (this.value === 'Accesorios') iconoCategoria.classList.add('fa-gem');
             else iconoCategoria.classList.add('fa-carrot'); // Default
         });
 
@@ -57,25 +58,77 @@ function renderizarProductos() {
         card.onclick = () => abrirDetalle(prod.id);
 
         let iconoCat = 'fa-paw';
-        if (prod.categoria === 'Juguetes') iconoCat = 'fa-futbol'; // Ajusta según prefieras
+        if (prod.categoria === 'Juguetes') iconoCat = 'fa-futbol';
         if (prod.categoria === 'Higiene') iconoCat = 'fa-soap';
         if (prod.categoria === 'Alimentos') iconoCat = 'fa-bone';
+        if (prod.categoria === 'Accesorios') iconoCat = 'fa-gem';
+
+        // Lógica de color de stock
+        let claseStock = '';
+        if (prod.stock > 10) claseStock = 'StockVerde';
+        else if (prod.stock >= 5) claseStock = 'StockAmarillo';
+        else claseStock = 'StockRojo';
 
         card.innerHTML = `
             <div class="EncabezadoTarjeta">
                 <div class="BadgeCategoria">
                     <i class="fa-solid ${iconoCat}"></i> ${prod.categoria}
                 </div>
-                <div class="BadgeStock">${prod.stock} unidades</div>
+                <div class="BadgeStock ${claseStock}">${prod.stock} unidades</div>
                 <img src="${prod.imagen}" alt="${prod.nombre}" class="ImagenProducto">
             </div>
             <div class="CuerpoTarjeta">
                 <h4 class="TituloTarjeta">${prod.nombre}</h4>
                 <p class="DescripcionTarjeta">${prod.descripcion}</p>
+                
+                <div class="PieTarjeta">
+                    <div class="InfoPrecio">
+                        <span class="EtiquetaPrecio">Precio</span>
+                        <span class="ValorPrecio">$${parseFloat(prod.precio).toFixed(2)}</span>
+                    </div>
+                    <div class="AccionesTarjeta">
+                        <button class="BtnIcono IconoEditar" onclick="prepararEditar(${prod.id}, event)">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button class="BtnIcono IconoEliminar" onclick="prepararEliminar(${prod.id}, event)">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         `;
         contenedorReal.appendChild(card);
     });
+}
+
+// --- ACCIONES DIRECTAS DESDE TARJETA ---
+function prepararEditar(id, event) {
+    event.stopPropagation(); // Evita abrir el detalle
+    const prod = productos.find(p => p.id === id);
+    productoSeleccionado = prod;
+
+    document.getElementById('EditarId').value = prod.id;
+    document.getElementById('EditarNombre').value = prod.nombre;
+    document.getElementById('EditarCategoria').value = prod.categoria;
+    document.getElementById('EditarPrecio').value = prod.precio;
+    document.getElementById('EditarStock').value = prod.stock;
+    document.getElementById('EditarImagen').value = prod.imagen;
+    document.getElementById('EditarDescripcion').value = prod.descripcion;
+
+    abrirModal('ModalEditar');
+}
+
+function prepararEliminar(id, event) {
+    event.stopPropagation(); // Evita abrir el detalle
+    const prod = productos.find(p => p.id === id);
+    productoSeleccionado = prod;
+
+    document.getElementById('EliminarNombre').innerText = prod.nombre;
+    document.getElementById('EliminarCategoria').innerText = prod.categoria;
+    document.getElementById('EliminarPrecio').innerText = prod.precio;
+    document.getElementById('EliminarStock').innerText = prod.stock;
+
+    abrirModal('ModalEliminar');
 }
 
 // --- MODALES (Lógica visual igual) ---
@@ -104,10 +157,20 @@ function abrirDetalle(id) {
     let iconoCat = 'fa-paw';
     if (prod.categoria === 'Higiene') iconoCat = 'fa-soap';
     if (prod.categoria === 'Alimentos') iconoCat = 'fa-bone';
+    if (prod.categoria === 'Juguetes') iconoCat = 'fa-futbol';
+    if (prod.categoria === 'Accesorios') iconoCat = 'fa-gem';
 
     divCat.innerHTML = `<span class="BadgeCategoria"><i class="fa-solid ${iconoCat}"></i> ${prod.categoria}</span>`;
 
-    document.getElementById('DetalleStock').innerHTML = `<i class="fa-solid fa-cube"></i> ${prod.stock} unidades`;
+    // Lógica de color de stock para el modal
+    let claseStock = '';
+    if (prod.stock > 10) claseStock = 'StockVerde';
+    else if (prod.stock >= 5) claseStock = 'StockAmarillo';
+    else claseStock = 'StockRojo';
+
+    const divStock = document.getElementById('DetalleStock');
+    divStock.className = `IndicadorStock ${claseStock}`;
+    divStock.innerHTML = `<i class="fa-solid fa-cube"></i> ${prod.stock} unidades`;
 
     abrirModal('ModalDetalle');
 }

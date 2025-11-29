@@ -7,6 +7,8 @@
     --btn-gradient-start: #aa4bfa;
     --btn-gradient-end: #d90f88;
     --stock-green: #00c853;
+    --stock-yellow: #f39c12;
+    --stock-red: #e74c3c;
     --text-dark: #2c3e50;
     --text-light: #7f8c8d;
     --border-color: #e0e0e0;
@@ -137,30 +139,48 @@ body {
 
 /* Badges */
 .BadgeCategoria {
-    position: absolute;
-    top: 15px;
-    left: 15px;
     background: white;
     padding: 5px 12px;
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: bold;
     color: #555;
-    display: flex;
+    display: inline-flex;
+    align-items: center;
     gap: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.TarjetaProducto .BadgeCategoria {
+    position: absolute;
+    top: 15px;
+    left: 15px;
 }
 
 .BadgeStock {
     position: absolute;
     top: 15px;
     right: 15px;
-    background: var(--stock-green);
+    background: #999;
+    /* Default gray */
     color: white;
     padding: 5px 12px;
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: bold;
+}
+
+.BadgeStock.StockVerde {
+    background: var(--stock-green);
+}
+
+.BadgeStock.StockAmarillo {
+    background: var(--stock-yellow);
+    color: #fff;
+}
+
+.BadgeStock.StockRojo {
+    background: var(--stock-red);
 }
 
 .CuerpoTarjeta {
@@ -179,6 +199,63 @@ body {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    margin-bottom: 15px;
+}
+
+/* New Footer Styles */
+.PieTarjeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #f9f9f9;
+}
+
+.InfoPrecio {
+    display: flex;
+    flex-direction: column;
+}
+
+.EtiquetaPrecio {
+    font-size: 0.75rem;
+    color: #999;
+    margin-bottom: 2px;
+}
+
+.ValorPrecio {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--primary-purple);
+}
+
+.AccionesTarjeta {
+    display: flex;
+    gap: 8px;
+}
+
+.BtnIcono {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 5px;
+    transition: transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.BtnIcono:hover {
+    transform: scale(1.15);
+}
+
+.IconoEditar {
+    color: var(--blue-edit);
+}
+
+.IconoEliminar {
+    color: var(--red-delete);
 }
 
 /* ===================== MODALES (GENÉRICOS) ===================== */
@@ -393,55 +470,87 @@ textarea:focus {
     background: linear-gradient(135deg, #ec7063, #e74c3c);
 }
 
-/* ===================== DETALLE ===================== */
+/* ===================== ESTILOS ESPECÍFICOS MODAL DETALLE ===================== */
 
-.ImagenDetalle {
-    width: 100%;
-    height: 200px;
-    object-fit: contain;
-    margin-bottom: 15px;
+.InfoDetalle small {
+    display: block;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    margin-top: 15px;
 }
 
 .TextoPrecio {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.8rem;
+    font-weight: 800;
     color: #d90f88;
+    /* Pink color from image */
+    margin: 0;
+}
+
+/* Override badge style for modal */
+#DetalleCategoria .BadgeCategoria {
+    background: #f0f0f0;
+    position: static;
+    /* Ensure it's static in modal */
+    box-shadow: none;
+    border: 1px solid #e0e0e0;
 }
 
 .CajaDescripcion {
-    padding: 10px;
-    background: #fafafa;
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
-    border: 1px solid #eee;
-}
-
-/* Fix for Badge inside Modal */
-#DetalleCategoria .BadgeCategoria {
-    position: relative;
-    top: auto;
-    left: auto;
-    display: inline-flex;
-    margin-top: 5px;
-    background: #f0f0f0;
-    color: #333;
-    box-shadow: none;
-    border: 1px solid #ddd;
+    padding: 12px;
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
 }
 
 .IndicadorStock {
-    margin-top: 5px;
-    font-weight: bold;
-    color: var(--stock-green);
+    font-weight: 700;
+    font-size: 1rem;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
 }
 
-.BotonesFull button {
+.IndicadorStock.StockVerde {
+    color: var(--stock-green);
+}
+
+.IndicadorStock.StockAmarillo {
+    color: var(--stock-yellow);
+}
+
+.IndicadorStock.StockRojo {
+    color: var(--stock-red);
+}
+
+/* Full width buttons for detail modal */
+.PieModal.BotonesFull {
+    display: flex;
+    gap: 15px;
     width: 100%;
 }
 
-/* ===================== UTILIDADES TEXTO ===================== */
+.PieModal.BotonesFull button {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.ImagenDetalle {
+    display: block;
+    margin: 0 auto 20px auto;
+    max-width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+}
+
+/* ===================== UTILIDADES TEXTO (USER ADDED) ===================== */
 .TextoRojo {
     color: var(--red-delete);
     margin: 0;
@@ -463,7 +572,7 @@ textarea:focus {
     font-weight: 600;
 }
 
-/* ===================== MEJORAS MODAL ELIMINAR ===================== */
+/* ===================== MEJORAS MODAL ELIMINAR (USER ADDED) ===================== */
 .IconoAdvertencia {
     font-size: 4rem;
     color: var(--red-delete);
