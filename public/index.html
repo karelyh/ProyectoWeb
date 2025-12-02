@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <!-- ENCABEZADO PRINCIPAL CON LOGO Y BOTÓN DE AGREGAR -->
@@ -59,11 +61,12 @@
                 <div class="GrupoFormulario">
                     <label>Categoría <span class="Requerido">*</span></label>
                     <div class="ContenedorSelect">
-                        <i class="fa-solid fa-carrot IconoInput"></i>
+                        <i class="fa-solid fa-carrot IconoInput" id="IconoCategoria"></i>
                         <select required id="AgregarCategoria">
                             <option value="Alimentos">Alimentos</option>
                             <option value="Juguetes">Juguetes</option>
                             <option value="Higiene">Higiene</option>
+                            <option value="Accesorios">Accesorios</option>
                         </select>
                     </div>
                 </div>
@@ -94,7 +97,8 @@
                 <!-- Descripción -->
                 <div class="GrupoFormulario">
                     <label>Descripción</label>
-                    <textarea placeholder="Descripción opcional del producto..." rows="3" id="AgregarDescripcion"></textarea>
+                    <textarea placeholder="Descripción opcional del producto..." rows="3"
+                        id="AgregarDescripcion"></textarea>
                 </div>
 
                 <!-- Botones del modal -->
@@ -177,6 +181,7 @@
                             <option value="Alimentos">Alimentos</option>
                             <option value="Juguetes">Juguetes</option>
                             <option value="Higiene">Higiene</option>
+                            <option value="Accesorios">Accesorios</option>
                         </select>
                     </div>
                 </div>
@@ -256,4 +261,5 @@
     <script src="script.js"></script>
 
 </body>
+
 </html>
