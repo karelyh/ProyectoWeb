@@ -1,7 +1,6 @@
 // crear_tabla.js
 const mysql = require('mysql2/promise');
 
-// ⚠️ PEGA AQUÍ ABAJO LA URL QUE COPIASTE DE RAILWAY (dentro de las comillas)
 const connectionString = "mysql://root:vvHBYnIiNcSVewmculicHfDfFKfFYgFP@shortline.proxy.rlwy.net:20053/railway"; 
 
 async function crear() {

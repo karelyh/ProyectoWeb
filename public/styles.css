@@ -71,7 +71,7 @@ body {
     color: var(--text-light);
 }
 
-.BtnPrimarioNaranja {
+.BtnPrimarioNaranja { /* Boton de agregar producto */
     background-color: var(--btn-orange);
     color: white;
     border: none;
@@ -93,7 +93,7 @@ body {
     padding: 40px 5%;
 }
 
-.TituloSeccion {
+.TituloSeccion { /* Titulo de la seccion de productos es decir dice hay 3 prodcutos o */
     color: var(--text-light);
     font-weight: 600;
     margin-bottom: 20px;
@@ -107,7 +107,7 @@ body {
 
 /* ===================== TARJETAS ===================== */
 
-.TarjetaProducto {
+.TarjetaProducto { /* tarjeta donde se ve cada producto */ 
     background: white;
     border-radius: var(--radius-lg);
     overflow: hidden;
