@@ -47,6 +47,7 @@ body {
     gap: 15px;
 }
 
+/* Cambiar el color del logo */
 .CajaLogo {
     width: 50px;
     height: 50px;
@@ -63,15 +64,20 @@ body {
     margin: 0;
     font-size: 1.3rem;
     color: #4a0072;
+    /*Cambia el color del titulo de la marca*/
 }
 
 .TextoMarca p {
     margin: 0;
     font-size: 0.85rem;
     color: var(--text-light);
+    /*Cambia el color del texto de la marca*/
 }
 
-.BtnPrimarioNaranja { /* Boton de agregar producto */
+/*Cambia el color del boton de agregar producto*/
+.BtnPrimarioNaranja {
+    /* Boton de agregar producto */
+
     background-color: var(--btn-orange);
     color: white;
     border: none;
@@ -93,7 +99,9 @@ body {
     padding: 40px 5%;
 }
 
-.TituloSeccion { /* Titulo de la seccion de productos es decir dice hay 3 prodcutos o */
+/* Cambiar el color a Mostrando 0 productos */
+.TituloSeccion {
+    /* Titulo de la seccion de productos es decir dice hay 3 prodcutos o */
     color: var(--text-light);
     font-weight: 600;
     margin-bottom: 20px;
@@ -106,8 +114,9 @@ body {
 }
 
 /* ===================== TARJETAS ===================== */
-
-.TarjetaProducto { /* tarjeta donde se ve cada producto */ 
+/*Cambiar el color de la tarjeta*/
+.TarjetaProducto {
+    /* tarjeta donde se ve cada producto */
     background: white;
     border-radius: var(--radius-lg);
     overflow: hidden;
@@ -137,7 +146,7 @@ body {
     object-fit: contain;
 }
 
-/* Badges */
+/* Badges - Cambia el color de la categoria de la tarjeta*/
 .BadgeCategoria {
     background: white;
     padding: 5px 12px;
@@ -191,11 +200,13 @@ body {
     margin: 0 0 10px 0;
     font-size: 1rem;
     color: var(--text-dark);
+    /*Cambia el color del titulo de la tarjeta*/
 }
 
 .DescripcionTarjeta {
     font-size: 0.85rem;
     color: #888;
+    /*Cambia el color del texto de la tarjeta*/
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -210,6 +221,7 @@ body {
     margin-top: 15px;
     padding-top: 15px;
     border-top: 1px solid #f9f9f9;
+    /*Cambia el color del border de la tarjeta*/
 }
 
 .InfoPrecio {
@@ -220,6 +232,7 @@ body {
 .EtiquetaPrecio {
     font-size: 0.75rem;
     color: #999;
+    /*Cambia el color del texto de la tarjeta*/
     margin-bottom: 2px;
 }
 
@@ -227,6 +240,7 @@ body {
     font-size: 1.1rem;
     font-weight: 800;
     color: var(--primary-purple);
+    /*Cambia el color del precio de la tarjeta*/
 }
 
 .AccionesTarjeta {
@@ -267,6 +281,7 @@ body {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
+    /*Cambia el color del fondo del modal, el fondo de los lados*/
     display: none;
     justify-content: center;
     align-items: center;
@@ -279,6 +294,7 @@ body {
 
 .TarjetaModal {
     background: white;
+    /*Cambia el color del fondo de la tarjeta modal*/
     width: 90%;
     max-width: 500px;
     /* Slightly wider */
@@ -311,6 +327,7 @@ body {
     margin-bottom: 20px;
 }
 
+/*Cambia el color del boton de cerrar modal*/
 .BtnCerrar {
     background: none;
     border: none;
@@ -341,6 +358,7 @@ body {
     top: 50%;
     transform: translateY(-50%);
     color: #777;
+    /*Cambia el color del icono de la tarjeta modal de agregar producto*/
 }
 
 .ContenedorInput span {
@@ -349,6 +367,7 @@ body {
     top: 50%;
     transform: translateY(-50%);
     color: #666;
+    /*Cambia el color del icono de la tarjeta modal de agregar producto*/
 }
 
 .ContenedorInput input,
